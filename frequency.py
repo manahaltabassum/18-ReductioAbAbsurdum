@@ -8,8 +8,8 @@ with open("book.txt","r") as f:
     #print book
 
 def wordFreq(word):
-    wordOccurence = len(list(filter(lambda x: x == word, book)))
-    print "The frequency of the word '" + word + "' is: " + str(wordOccurence)
+    return len(list(filter(lambda x: x == word, book)))
+    #print "The frequency of the word '" + word + "' is: " + str(wordOccurence)
     
 def phraseFreq(phrase):
     phraseLen = len(phrase.split())
@@ -17,7 +17,15 @@ def phraseFreq(phrase):
     phraseOccurence = len([x for x in groups if x == phrase.split()])
     print "The frequency of the phrase '" + phrase + "' is: " + str(phraseOccurence)
 
-wordFreq("the")
-wordFreq("Hart")
+#for each unique word in book, count the frequency of the word
+wordFreqs = {word:wordFreq(word) for word in set(book)}
+
+def mostFreq():
+	return reduce(lambda a,b: a if wordFreqs[a] > wordFreqs[b] else b, wordFreqs)
+
+print "frequency of the word 'the': "+ str(wordFreq("the"))
+print "frequency of the word 'Hart': "+ str(wordFreq("Hart"))
 phraseFreq("a loose network of")
 phraseFreq("of the")
+
+print "the most frequent word is " + "'"+ mostFreq() +"'"
